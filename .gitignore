@@ -1,7 +1,6 @@
 outfile
 pipex
 push_swap
-objs/ft_access.o
-objs/ft_getpath.o
-objs/ft_which.o
-objs/main.o
+objs/*.o
+*.ans
+*.out

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 05:57:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/29 11:20:55 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/30 06:26:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,19 @@ static char	**_get_null_path(void)
 
 char	**ft_getpath(char **envp)
 {
-	int		i;
 	char	*curpath;
 	char	**paths;
 
-	i = 0;
 	if (envp == NULL)
 		return (_get_null_path());
-	while (envp[i] != NULL)
+	curpath = ft_getenv(PATH_PREFIX, envp);
+	if (curpath == NULL)
+		return (_get_null_path());
+	paths = ft_split(curpath, PATH_DELIM);
+	if (paths == NULL)
 	{
-		if (ft_strnstr(envp[i], PATH_PREFIX, ft_strlen(PATH_PREFIX)) != NULL)
-		{
-			curpath = ft_strtrim(envp[i], PATH_PREFIX);
-			paths = ft_split(curpath, PATH_DELIM);
-			if (curpath != NULL)
-				free(curpath);
-			return (paths);
-		}
-		i++;
+		free(curpath);
+		return (_get_null_path());
 	}
-	return (_get_null_path());
+	return (paths);
 }

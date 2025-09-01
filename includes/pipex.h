@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 00:30:49 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/29 11:28:55 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/31 14:12:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,7 @@
 int	ft_access(const char *fname);
 char	**ft_getpath(char **envp);
 char	*ft_which(char *cmd, char **envp);
+char	*ft_getenv(char *prefix, char **envp);
+char	*ft_getpwd(char **envp);
+char	*ft_getshell(char **envp);
 #endif

@@ -44,6 +44,19 @@ int	split_argv(int *argc, char ***argv)
 }
 
 
+void	free_argv(char **argv)
+{
+	int	i;
+
+	i = 0;
+	if (argv == NULL)
+		return ;
+	while (argv[i] != NULL)
+		free (argv[i++]);
+	free (argv);
+	return ;
+}
+
 //child_process_1(argv[1], argv[2])
 int	child_process_1(char *infile, char *cmd, int pipefd[2], char **envp)
 {
@@ -51,7 +64,6 @@ int	child_process_1(char *infile, char *cmd, int pipefd[2], char **envp)
 	char	**argv;
 	int		infild_fd;
 	// Child process.
-	ft_printf("START CHILD1\n");
 
 	// Close read fd.
 	close(pipefd[0]);
@@ -59,7 +71,6 @@ int	child_process_1(char *infile, char *cmd, int pipefd[2], char **envp)
 	// Split cmd and create argv.
 	argv = ft_split(cmd, ' ');
 	cmd_path = ft_which(argv[0], envp);
-	ft_printf("cp1 cmd_path: %s\n", cmd_path);
 
 	// Redirect < intext
 	// Redirect output.
@@ -67,17 +78,21 @@ int	child_process_1(char *infile, char *cmd, int pipefd[2], char **envp)
 	if (infild_fd == -1)
 		return (1);
 	dup2(infild_fd, STDIN_FILENO);
-	ft_printf("START CHILD1\n");
+	close(infild_fd);
 
 	// Redirect output
 	dup2(pipefd[1], STDOUT_FILENO);
 	dup2(pipefd[1], STDERR_FILENO);
+	close(pipefd[1]);
 
-	ft_printf("START CHILD1\n");
 	// Execute cmd.
 	execve(cmd_path, argv, envp);
 
-	ft_printf("START CHILD1\n");
+	// Free if execve failed.
+	ft_printf("execve failed!!\n");
+	free(cmd_path);
+	free_argv(argv);
+
 	// Return if error in execve.
 	exit(1);
 }
@@ -91,72 +106,63 @@ int	child_process_2(char *outfile, char *cmd, int pipefd[2], char **envp)
 	close(pipefd[1]);
 	// Execute change STDOUT_FD & STDERR_FD to pipe input.
 	dup2(pipefd[0], STDIN_FILENO);
-	//dup2(STDIN_FILENO, pipefd[0]);
+	close(pipefd[0]);
 
 	// Split cmd and create argv.
 	argv = ft_split(cmd, ' ');
 	cmd_path = ft_which(argv[0], envp);
+
 	// Redirect < outtext
 	// Open outfile and redirect outfile_fd to STDOUT_FD.
-	ft_printf("START CHILD2\n");
-	ft_printf("cp2 cmd_path: %s\n", cmd_path);
-	outfile_fd = open(outfile, O_WRONLY);
+	outfile_fd = open(outfile, O_WRONLY | O_CREAT);
 	if (outfile_fd == -1)
 		return (1);
-	ft_printf("START CHILD2\n");
-	//dup2(STDOUT_FILENO, outfile_fd);
 	dup2(outfile_fd, STDOUT_FILENO);
-	//dup2(outfile_fd, STDERR_FILENO);
-	ft_printf("START CHILD2\n");
+	dup2(outfile_fd, STDERR_FILENO);
+	close(outfile_fd);
+
 	execve(cmd_path, argv, envp);
-	ft_printf("START CHILD2\n");
+
+	// Free if execve failed.
+	free(cmd_path);
+	free_argv(argv);
+
 	exit(1);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	int		status;
+	int		pid1;
+	int		pid2;
+	int		pipefd[2];
+
+	ft_printf("shell: -> %s\n", ft_getshell(envp));
 
 	(void)argc;
-	int	pipefd[2];
 	if (pipe(pipefd) == -1)
 		return (1);
 
-	int	pid1;
 	pid1 = fork();
 	if (pid1 == -1)
 		return (1);
 	if (pid1 == 0)
-	{
-		//int	res1;
 		child_process_1(argv[1], argv[2], pipefd, envp);
-	}
-	int	pid2;
+
 	pid2 = fork();
 	if (pid2 == -1)
 		return (1);
 	if (pid2 == 0)
-	{
 		child_process_2(argv[4], argv[3], pipefd, envp);
-	}
+
 	close(pipefd[0]);
 	close(pipefd[1]);
-	ft_printf("waiting for pid1[%d] finish\n", pid1);
+
 	if ((waitpid(pid1, &status, 0)) < 0)
 	{
 		ft_printf("error");
 		return (1);
 	}
-	ft_printf("waiting for pid1[%d] finish\n", pid1);
-	ft_printf("waiting for pid2[%d] finish\n", pid2);
 	waitpid(pid2, &status, 0);
-	ft_printf("waiting for pid2[%d] finish\n", pid2);
-	/*
-	cmd2 = ft_strdup(argv[3]);
-	// validate if split_count == 0.
-	outfile = ft_strdup(argv[4]);
-	*/
-
-
 	return (0);
 }
