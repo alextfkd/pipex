@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 05:25:48 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/21 13:17:58jg    dwrzli                      by marvin           ###   ########.fr       */
+/*   Created: 2025/09/02 20:58:08 by tkatsuma          #+#    #+#             */
+/*   Updated: 2025/09/02 22:01:14 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,14 @@ int	main(int argc, char **argv, char **envp)
 	int		pid1;
 	int		pid2;
 	int		pipefd[2];
+
+	int i;
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		ft_putendl_fd(envp[i++], STDOUT_FILENO);
+	}
+	ft_printf("pid: -> %d\n", getgid());
 
 	ft_printf("shell: -> %s\n", ft_getshell(envp));
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 cc mal_code.c -o segv.o                   
 cc exit0_code.c -o exit0.o
 cc exit1_code.c -o exit1.o

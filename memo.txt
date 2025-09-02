@@ -1,0 +1,6 @@
+tkatsuma@c4r1s3:~/Documents/pipex$ < ./test/no_enter_dir/ grep " " | cat > x
+executable.sh    owner_only.txt   public_file.txt  readonly.txt     read_write.txt   
+tkatsuma@c4r1s3:~/Documents/pipex$ < ./test/no_enter_dir/owner_only.txt grep " " | cat > x
+bash: ./test/no_enter_dir/owner_only.txt: Permission denied
+tkatsuma@c4r1s3:~/Documents/pipex$ 
+o
