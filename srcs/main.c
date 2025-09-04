@@ -6,7 +6,7 @@
 /*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:58:08 by tkatsuma          #+#    #+#             */
-/*   Updated: 2025/09/02 22:01:14 by tkatsuma         ###   ########.fr       */
+/*   Updated: 2025/09/04 22:44:14 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,27 @@ int	child_process_2(char *outfile, char *cmd, int pipefd[2], char **envp)
 	exit(1);
 }
 
+static int	_if_abspath(char *path)
+{
+	if (path[0] == '/')
+		return (1);
+	return (0);
+}
+
+int	_if_valid_filepath(char *path)
+{
+	if (path == NULL)
+		return (NULL);
+	if (_if_posix_standard(path) == 0)
+		return (NULL)
+	if (_if_abspath(path) == 1)
+
+		// Abspath.
+	
+	
+
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int		status;
@@ -139,6 +160,7 @@ int	main(int argc, char **argv, char **envp)
 
 	int i;
 	i = 0;
+	/*
 	while (envp[i] != NULL)
 	{
 		ft_putendl_fd(envp[i++], STDOUT_FILENO);
@@ -146,6 +168,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_printf("pid: -> %d\n", getgid());
 
 	ft_printf("shell: -> %s\n", ft_getshell(envp));
+	*/
 
 	(void)argc;
 	if (pipe(pipefd) == -1)
