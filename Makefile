@@ -8,7 +8,7 @@ SRCDIR = ./srcs
 LIBFT = ./libft/libft.a
 FT_PRINTF = ./ft_printf/libftprintf.a
 
-SRCS = main.c ft_access.c ft_getpath.c ft_which.c ft_getenv.c ft_getpwd.c ft_getshell.c
+SRCS = main.c ft_access.c ft_getpath.c ft_which.c ft_getenv.c ft_getpwd.c ft_getshell.c pipex_utils.c ft_is_posix.c
 
 #CDLST = cdlst_create.c cdlst_delete.c cdlst_findnode.c cdlst_insert.c cdlst_utils.c cdlst_rotate.c
 #CDLST_OBJS = $(addprefix $(OBJDIR)/, $(CDLST:.c=.o))

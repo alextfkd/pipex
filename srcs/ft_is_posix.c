@@ -6,7 +6,7 @@
 /*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 21:26:24 by tkatsuma          #+#    #+#             */
-/*   Updated: 2025/09/04 22:43:52 by tkatsuma         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:16:50 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ static int	_if_valid_length(char *path)
 	return (1);
 }
 
-int	_if_posix_standard(char *path)
+int	ft_is_posix(char *path)
 {
-	int		res;
-
 	if (path == NULL)
 		return (-1);
 	if (_if_hasspace(path) != 0)
 		return (0);
-	if (_is_valid_length(path) == 0)
+	if (_if_valid_length(path) == 0)
 		return (0);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_which.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:17:02 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/30 07:29:06 by marvin           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:15:00 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	_free_paths(char **paths)
 	return ;
 }
 
+/*
 static char	*_get_pwd_cmd(char *slash_cmd, char **envp)
 {
 	char	*pwd;
@@ -40,6 +41,7 @@ static char	*_get_pwd_cmd(char *slash_cmd, char **envp)
 		return (cmd_path);
 	return (NULL);
 }
+*/
 
 static char	*_get_path_cmd(char *slash_cmd, char **envp)
 {
@@ -70,15 +72,11 @@ char	*ft_which(char *cmd, char **envp)
 
 	if (cmd == NULL || envp == NULL)
 		return (NULL);
+	if (ft_strchr(cmd, '/') != NULL)
+		return (cmd);
 	slash_cmd = ft_strjoin(PATH_DELIM, cmd);
 	if (slash_cmd == NULL)
 		return (NULL);
-	cmd_path = _get_pwd_cmd(slash_cmd, envp);
-	if (cmd_path != NULL)
-	{
-		free(slash_cmd);
-		return (cmd_path);
-	}
 	cmd_path = _get_path_cmd(slash_cmd, envp);
 	free(slash_cmd);
 	if (cmd_path != NULL)

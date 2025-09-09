@@ -6,7 +6,7 @@
 /*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:58:08 by tkatsuma          #+#    #+#             */
-/*   Updated: 2025/09/04 22:44:14 by tkatsuma         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:12:31 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,66 @@ static int	_if_abspath(char *path)
 int	_if_valid_filepath(char *path)
 {
 	if (path == NULL)
-		return (NULL);
-	if (_if_posix_standard(path) == 0)
-		return (NULL)
+		return (-1);
+	if (ft_is_posix(path) != 1)
+		return (-1);
 	if (_if_abspath(path) == 1)
+		return (1);
+	return (0);
+}
 
-		// Abspath.
-	
-	
+int	is_readable(char *path)
+{
+	if (path == NULL)
+		return (-1);
+	if (ft_is_posix(path) != 1)
+		return (-1);
+	if (access(path, F_OK) == -1)
+		return (-1);
+	if (access(path, R_OK) == 0)
+		return (R_OK);
+	return (0);
+}
 
+int	is_writable(char *path)
+{
+	if (path == NULL)
+		return (-1);
+	if (ft_is_posix(path) != 1)
+		return (-1);
+	if (access(path, F_OK) == -1)
+		return (-1);
+	if (access(path, W_OK) == 0)
+		return (W_OK);
+	return (0);
+}
+
+int	is_executable(char *cmd, char **envp)
+{
+	char	*cmd_path;
+	char	**argv;
+	int		res;
+
+	if (cmd == NULL)
+		return (-1);
+	// Split cmd and create argv.
+	argv = ft_split(cmd, ' ');
+	if (argv == NULL)
+		return (-1);
+	cmd_path = ft_which(argv[0], envp);
+	if (cmd_path == NULL)
+		res = -1;
+	else if (ft_is_posix(cmd_path) != 1)
+		res = -1;
+	else if (access(cmd_path, F_OK) == -1)
+		res = -1;
+	else if (access(cmd_path, X_OK) == 0)
+		res = X_OK;
+	else
+		res = 0;
+	free_paths(argv);
+	free(cmd_path);
+	return (res);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -160,6 +211,33 @@ int	main(int argc, char **argv, char **envp)
 
 	int i;
 	i = 0;
+	if (argc != 5)
+		return (1);
+	// Check if argv[1] is readable file.
+	if (is_readable(argv[1]) !=  R_OK)
+	{
+		perror("error 1");
+		return (1);
+	}
+	if (is_writable(argv[4]) != W_OK)
+	{
+		perror("error 4");
+		return (1);
+	}
+	if (is_executable(argv[2], envp) !=  X_OK)
+	{
+		perror("error 2");
+		return (1);
+	}
+	if (is_executable(argv[3], envp) !=  X_OK)
+	{
+		perror("error 3");
+		return (1);
+	}
+
+
+	// Check if argv[4] is writable file.
+
 	/*
 	while (envp[i] != NULL)
 	{

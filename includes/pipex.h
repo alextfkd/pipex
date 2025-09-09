@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 00:30:49 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/31 14:12:51 by marvin           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:15:25 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ char	*ft_which(char *cmd, char **envp);
 char	*ft_getenv(char *prefix, char **envp);
 char	*ft_getpwd(char **envp);
 char	*ft_getshell(char **envp);
+int		ft_is_posix(char *path);
+void	free_paths(char **paths);
 #endif

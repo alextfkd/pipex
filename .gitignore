@@ -4,3 +4,4 @@ push_swap
 objs/*.o
 *.ans
 *.out
+*.o
