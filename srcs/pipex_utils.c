@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:30:06 by tkatsuma          #+#    #+#             */
-/*   Updated: 2025/09/19 10:12:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/09/19 22:00:33 by tkatsuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,10 @@ void	exit_with_perror(int etype, char *emsg)
 {
 	perror(emsg);
 	exit (etype);
+}
+
+void	close_pipefd(int *pipefd)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
 }
