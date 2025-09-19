@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_posix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkatsuma <tkatsuma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkatsumata <tkatsumata@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 21:26:24 by tkatsuma          #+#    #+#             */
-/*   Updated: 2025/09/09 18:16:50 by tkatsuma         ###   ########.fr       */
+/*   Updated: 2025/09/18 10:43:08 by tkatsumata       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#define NAME_MAX 255
-#define PATH_MAX 4096
+#define FT_NAME_MAX 255
+#define FT_PATH_MAX 4096
 #define EMSG_HASSPACE "HASSPACE"
 #define EMSG_LONGPATH "LONGPATH"
 #define EMSG_MFAIL "MFAIL"
@@ -51,7 +51,7 @@ static int	_if_valid_length(char *path)
 	char	**names;
 	int		i;
 
-	if (ft_strlen(path) >= PATH_MAX)
+	if (ft_strlen(path) >= FT_PATH_MAX)
 		return (perror(EMSG_LONGPATH), 0);
 	names = ft_split(path, '/');
 	if (names == NULL)
@@ -59,7 +59,7 @@ static int	_if_valid_length(char *path)
 	i = 0;
 	while (names[i] != NULL)
 	{
-		if (ft_strlen(names[i++]) >= NAME_MAX)
+		if (ft_strlen(names[i++]) >= FT_NAME_MAX)
 		{
 			_free_names(names);
 			return (perror(EMSG_LONGNAME), 0);

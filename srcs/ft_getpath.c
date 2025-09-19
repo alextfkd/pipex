@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 05:57:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/30 06:26:12 by marvin           ###   ########.fr       */
+/*   Updated: 2025/09/18 06:09:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ char	**ft_getpath(char **envp)
 		free(curpath);
 		return (_get_null_path());
 	}
+	free(curpath);
 	return (paths);
 }
